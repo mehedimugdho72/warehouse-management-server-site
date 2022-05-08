@@ -24,7 +24,7 @@ async function run() {
             const products = await cursor.toArray();
             res.send(products);
         })
-        // single product showing:-
+        // single product showing :-
         app.get('/product/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
@@ -36,14 +36,14 @@ async function run() {
             const myItems = req.body;
             const result = await productCollection.insertOne(myItems);
             res.send(result);
-        })     
-        // specific One item Delete:-
+        })
+        // specific One item delete:-
         app.delete('/product/:id', async (req, res) => {
             const id = req.params.id;
-            const query = {_id: ObjectId(id)};
+            const query = { _id: ObjectId(id) };
             const result = await productCollection.deleteOne(query);
             res.send(result);
-      })
+        })
     }
     finally {
         // await client.close();
@@ -52,7 +52,7 @@ async function run() {
 run().catch(console.dir);
 
 app.get('/', (req, res) => {
-    res.send('Hello!')
+    res.send('Hello world!')
 })
 
 app.listen(port, () => {
