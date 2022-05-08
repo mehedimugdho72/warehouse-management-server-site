@@ -17,12 +17,20 @@ async function run() {
     try {
         await client.connect();
         const productCollection = client.db("star").collection("product");
+        const reviewsCollection = client.db("starReview").collection("review");
         // get product items:-
         app.get('/product', async (req, res) => {
             const query = {};
             const cursor = productCollection.find(query);
             const products = await cursor.toArray();
             res.send(products);
+        })
+        //get review item:-
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const cursor = reviewsCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
         })
         // single product showing :-
         app.get('/product/:id', async (req, res) => {
@@ -44,6 +52,7 @@ async function run() {
             const result = await productCollection.deleteOne(query);
             res.send(result);
         })
+
     }
     finally {
         // await client.close();
