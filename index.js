@@ -80,7 +80,7 @@ async function run() {
             res.send(result);
         })
         // find my item
-        app.get('/product',verifyJWT, async (req, res) => {
+        app.get('/product', async (req, res) => {
             const email = req.query.email;
             // if (email) {
                 const query = { email: email }
