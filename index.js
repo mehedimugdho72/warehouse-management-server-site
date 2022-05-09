@@ -82,15 +82,15 @@ async function run() {
         // find my item
         app.get('/product', async (req, res) => {
             const email = req.query.email;
-            // if (email) {
+            if (email) {
                 const query = { email: email }
                 const cursor = productCollection.find(query);
                 const result = await cursor.toArray()
                 res.send(result)
-            // }
-            // else {
+            }
+            else {
             //     res.send(403).send({ message: 'forbiden access' })
-            // }
+            }
         })
         // Update item Added:-
         app.put('/product/:id', async (req, res) => {
