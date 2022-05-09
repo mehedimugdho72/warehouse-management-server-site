@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors');
 const app = express()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const res = require('express/lib/response');
 require('dotenv').config()
 const port = process.env.PORT || 5000
 
@@ -24,11 +23,12 @@ function verifyJWT(req, res, next) {
         req.decoded = decoded;
         next();
     });
-    // console.log('inside verifyingJWT', authHeader)
+    console.log('inside verifyingJWT', authHeader)
     next();
 }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.v0kir.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+console.log(uri);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run() {
     try {
@@ -46,7 +46,7 @@ async function run() {
         })
 
         // get product items:-
-        app.get('/product', async (req, res) => {
+        app.get('/products', async (req, res) => {
             const query = {};
             const cursor = productCollection.find(query);
             const products = await cursor.toArray();
@@ -80,10 +80,9 @@ async function run() {
             res.send(result);
         })
         // find my item
-        app.get('/products', verifyJWT, async (req, res) => {
-            const decodeEmail = req.decoded.email;
+        app.get('/product',verifyJWT, async (req, res) => {
             const email = req.query.email;
-            if (email === decodeEmail) {
+            if (email) {
                 const query = { email: email }
                 const cursor = productCollection.find(query);
                 const result = await cursor.toArray()
